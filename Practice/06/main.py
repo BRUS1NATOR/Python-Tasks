@@ -1,6 +1,12 @@
 import math
 
-G = 9.8
+
+def user_input():
+    try:
+        a, b, c = map(float, input("Введите a, b, c: ").split())
+        print(calculate_roots(a, b, c))
+    except ValueError:
+        user_input()
 
 
 def calculate_roots(a, b, c):
@@ -14,9 +20,8 @@ def calculate_roots(a, b, c):
         x = -b / (2 * a)
         return x
     else:
-        return None
+        return "Нет корней"
 
 
 if __name__ == '__main__':
-    a, b, c = map(float, input("Введите a, b, c: ").split())
-    print(calculate_roots(a, b, c))
+    user_input()

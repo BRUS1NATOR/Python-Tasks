@@ -1,4 +1,4 @@
-def printValues(a, b):
+def print_values(a, b):
     print(a)
     print(b)
 
@@ -11,10 +11,8 @@ if __name__ == '__main__':
     temp = coolNum
     coolNum = coolerNum
     coolerNum = temp
-
-    printValues(coolNum, coolerNum)
+    print_values(coolNum, coolerNum)
 
     # Поменять местами без 3 переменной
     coolNum, coolerNum = coolerNum, coolNum
-
-    printValues(coolNum, coolerNum)
+    print_values(coolNum, coolerNum)
