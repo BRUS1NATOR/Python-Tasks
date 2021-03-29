@@ -2,31 +2,32 @@ import os
 import sys
 
 
-def tryExecFile(path):
+def tryExecFile(path, file_name):
     print('Пытаюсь открыть:', path)
     try:
-        fsenc = sys.getfilesystemencoding()
-        exec(open(path, encoding='utf-8').read())
-        userProceed()
+        sys.path.append(path)   # Для 21 лабы (import)
+        exec(open(path + file_name, encoding='utf-8').read(), globals())
+        user_proceed()
     except FileNotFoundError:
         print('Файл не найден')
-        userInput()
+        user_input()
 
 
-def userInput():
+def user_input():
     num = int(input('Введите номер практического задания: '))
     if num < 10:
         num = '0' + str(num)
-    path = os.path.dirname(os.path.realpath(__file__)) + "\\Practice\\" + str(num) + "\\main.py"
-    tryExecFile(path)
+    path = os.path.dirname(os.path.realpath(__file__)) + "\\Practice\\" + str(num)
+    tryExecFile(path, "\\main.py")
 
 
-def userProceed():
+def user_proceed():
     yesOrNo = input('Открыть другое задание(y/n)?: ')
-    if(yesOrNo.__contains__('y') or yesOrNo.__contains__('д')):
-        userInput()
+    if yesOrNo.__contains__('y') or yesOrNo.__contains__('д'):
+        user_input()
     else:
         return
 
+
 if __name__ == '__main__':
-    userInput()
+    user_input()
