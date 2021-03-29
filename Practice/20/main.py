@@ -3,6 +3,26 @@ import re
 all_drinks = []
 
 
+class DrinkSet:
+    Price = 0
+    Volume = 0
+    Names = {}
+
+    def __init__(self, drinks):
+        self.Names = {}             # Почему без этого работает не как задумано???????????????????????????????????
+        for drink in drinks:
+            self.Volume += drink.Volume
+            self.Price += drink.Price
+            if drink.Name in self.Names:
+                self.Names[drink.Name] += 1
+            else:
+                self.Names[drink.Name] = 1
+
+
+def get_volume(drinkset):
+    return drinkset.Volume
+
+
 class Drink:
     Name = ''
     Price = 0
@@ -40,51 +60,55 @@ def create_drink():
 def calculate(money):
     global all_drinks
     result = []
-    temp = []
+
     for drink in all_drinks:
-        result += stupid_function(temp, all_drinks, drink, money, 0)
+        temp_list = []
+        if money >= drink.Price:
+            brute_force(result, temp_list[:], all_drinks, drink, money, 0)
     return result
 
 
-def stupid_function(result, drinks, drink_now, money, volume):
+def brute_force(result, temp_list, drinks, drink_now, money, volume):
 
-    result.append(drink_now)
+    temp_list.append(drink_now)
     money -= drink_now.Price
     volume += drink_now.Volume
 
     for drink in drinks:
         if money >= drink.Price:
-            stupid_function(result, drinks, drink, money, volume)
+            brute_force(result, temp_list[:], drinks, drink, money, volume)
         else:
-            return result
+            result.append(DrinkSet(temp_list[:]))
 
 
 def user_input():
-    # try:
-    money = int(input('Введите количество денег (0<=x<=10^9): '))
-    if not 0 <= money <= 10 ** 9:
-        print('Количество денег должно быть не меньше 0 и не больше 10^9')
-        raise ValueError
+    try:
+        money = int(input('Введите количество денег (0<=x<=10^9): '))
+        if not 0 <= money <= 10 ** 9:
+            print('Количество денег должно быть не меньше 0 и не больше 10^9')
+            raise ValueError
 
-    drink_types = int(input('Введите количество разновидностей напитков (1<=x<=10^9): '))
-    if not 1 <= drink_types <= 10 ** 9:
-        print('Количество напитков должно быть не меньше 1 и не больше 10^9')
-        raise ValueError
+        drink_types = int(input('Введите количество разновидностей напитков (1<=x<=10^9): '))
+        if not 1 <= drink_types <= 10 ** 9:
+            print('Количество напитков должно быть не меньше 1 и не больше 10^9')
+            raise ValueError
 
-    drinks_input(drink_types)
-    for i in calculate(money):
-        print(i.Name)
-        # for v in i:
-        #     print(v)
+        drinks_input(drink_types)
 
+        result = calculate(money)
+        if len(result) == 0:
+            print(-1)
+        else:
+            best_solution = max(result, key=get_volume)
 
+            for key in best_solution.Names:
+                print(key, best_solution.Names[key])
+            print(best_solution.Volume)
+            print(money - best_solution.Price)
 
-# except ValueError:
-#     print('err')
-#     user_input()
-# except TypeError:
-#     print('err')
-#     user_input()
+    except ValueError or TypeError:
+        user_input()
+
 
 if __name__ == '__main__':
     user_input()

@@ -1,7 +1,6 @@
 import re
 
 known_words = ['hallo', 'klempner', 'das', 'ist', 'fantastisch', 'fluggegecheimen']
-letter_possibility = {}
 
 
 def calculate(letters, length):
