@@ -21,6 +21,20 @@ def decompose_number(number, result):
         result[number] = 1
 
 
+def print_factorization(n: int):
+    result = {}
+    decompose_number(n, result)
+
+    s = ""
+    for i in result:
+        if result[i] > 1:
+            s += '*' + str(i) + '^' + str(result[i])
+        else:
+            s += '*' + str(i)
+    s = s[1:len(s)]
+
+    print(s)
+
 prime_nums = []
 
 
@@ -38,18 +52,7 @@ def user_input():
             if temp != 0:
                 prime_nums.append(temp)
 
-        result = {}
-        decompose_number(number, result)
-
-        s = ""
-        for i in result:
-            if result[i] > 1:
-                s += '*' + str(i) + '^' + str(result[i])
-            else:
-                s += '*' + str(i)
-        s = s[1:len(s)]
-
-        print(s)
+        print_factorization(number)
 
     except ValueError or TypeError:
         print('Число должно быть целым и в промежутке 2 <= x <= 10**9')
