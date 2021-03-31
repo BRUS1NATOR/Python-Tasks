@@ -1,5 +1,16 @@
-def create_dic(x1, x2):
-    return {'x1': x1, 'x2': x2, 'sumIsNull': x1+x2 == 0}
+def find_pare(r1, r2, index1, index2, target):
+    if r1[index1] + r2[index2] == target:
+        return [r1[index1], r2[index2]]
+    else:
+        index2 += 1
+        if index2 < len(r2):
+            return find_pare(r1, r2, index1, index2, target)
+        else:
+            index1 += 1
+            if index1 < len(r1):
+                return find_pare(r1, r2, index1, index2, target)
+            else:
+                return -1
 
 
 def user_input():
@@ -13,14 +24,8 @@ def user_input():
         r1 = numbers[1:3]
         r2 = numbers[3:5]
 
-        c1 = list(map(lambda x, y: create_dic(x, y), r1, r2))
-        c2 = list(map(lambda x, y: create_dic(x, y), r1, reversed(r2)))
-
-        result = list(filter(lambda x: x['sumIsNull'] == True, c1 + c2))
-
-        if len(result) > 0:
-            result = sorted(result, key=lambda x: x['x1'])
-            print(result[0]['x1'], result[0]['x2'])
+        if r1[0] + r2[0] <= numbers[0] <= r1[1] + r2[1]:
+            print(*find_pare(r1, r2, 0, 0, numbers[0]))
         else:
             print(-1)
 
