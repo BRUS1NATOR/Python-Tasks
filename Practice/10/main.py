@@ -7,6 +7,7 @@ def find_pare(r1, r2, index1, index2, target):
             return find_pare(r1, r2, index1, index2, target)
         else:
             index1 += 1
+            index2 = 0
             if index1 < len(r1):
                 return find_pare(r1, r2, index1, index2, target)
             else:
