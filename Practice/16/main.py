@@ -14,7 +14,7 @@ def user_input():
             if len(tickets.split(' ')) != number:
                 raise TicketCountError
 
-            regex = r"(^[a-z]{2}[0-9]{2}55661)"
+            regex = r"(^a[a-z0-9]{3}55661)"
             result = re.findall(regex, tickets)
 
             if len(result) == 0:
