@@ -9,13 +9,15 @@ def user_input():
     try:
         number = int(input('Введите количество билетов Сигизмунда в промежутке 1 <= x <= 10^9: '))
         if 1 <= number <= 10 ** 9:
-            tickets = input('Введите билеты через пробел: ')
+            tickets = input('Введите билеты через пробел: ').split(' ')
 
-            if len(tickets.split(' ')) != number:
+            if len(tickets) != number:
                 raise TicketCountError
 
             regex = r"(^a[a-z0-9]{3}55661)"
-            result = re.findall(regex, tickets)
+            r = re.compile(regex)
+
+            result = list(filter(r.match, tickets))
 
             if len(result) == 0:
                 print(-1)
